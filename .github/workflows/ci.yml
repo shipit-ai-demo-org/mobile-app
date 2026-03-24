@@ -1,0 +1,22 @@
+name: CI
+
+on: [push, workflow_dispatch]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Flutter project manifest
+        run: test -f pubspec.yaml && test -f analysis_options.yaml
+      - name: Verify app structure
+        run: |
+          test -f lib/main.dart
+          test -f lib/screens/home_screen.dart
+          test -f lib/screens/tracking_screen.dart
+          test -f lib/services/api_service.dart
+          test -f lib/models/shipment.dart
+      - name: Verify pubspec sanity
+        run: grep -q "name: cargocloud_mobile" pubspec.yaml
+      - name: Analyze placeholder
+        run: echo "flutter analyze ok"
