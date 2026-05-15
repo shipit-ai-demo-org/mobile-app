@@ -23,6 +23,14 @@ class _TrackingScreenState extends State<TrackingScreen> {
     _shipmentFuture = _api.fetchShipment(widget.trackingNumber);
   }
 
+  Future<void> _refresh() async {
+    final future = _api.fetchShipment(widget.trackingNumber);
+    setState(() {
+      _shipmentFuture = future;
+    });
+    await future;
+  }
+
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat.yMMMd().add_jm();
@@ -38,7 +46,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
             return Center(child: Text('Could not load shipment: ${snapshot.error}'));
           }
           final shipment = snapshot.data!;
-          return ListView(
+          return RefreshIndicator(
+            onRefresh: _refresh,
+            child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
               Card(
@@ -60,6 +70,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   ),
                 ),
             ],
+            ),
           );
         },
       ),
