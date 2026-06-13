@@ -17,7 +17,7 @@ jobs:
           test -f lib/services/api_service.dart
           test -f lib/models/shipment.dart
       - name: Verify pubspec sanity
-        run: grep -q "name: cargocloud_mobile" pubspec.yaml
+        run: 'grep -q "name: cargocloud_mobile" pubspec.yaml'
       - name: Analyze placeholder
         run: echo "flutter analyze ok"
 
