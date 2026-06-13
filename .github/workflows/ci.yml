@@ -20,3 +20,5 @@ jobs:
         run: grep -q "name: cargocloud_mobile" pubspec.yaml
       - name: Analyze placeholder
         run: echo "flutter analyze ok"
+
+# Re-registered after stale workflow indexing
